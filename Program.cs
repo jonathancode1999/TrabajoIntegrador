@@ -43,7 +43,7 @@ namespace TrabajoIntegrador
         static void Main(string[] args)
         {
 
-            Console.WriteLine("Mauricio puto");
+            Console.WriteLine("Joni Se La Come");
             Console.ReadKey();
         }
     }
