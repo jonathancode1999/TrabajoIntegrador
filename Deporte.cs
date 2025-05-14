@@ -67,14 +67,14 @@ namespace TrabajoIntegrador
         //Constructor
         public Deporte(string nombre, string categoria,Entrenador entrenador, int cupo,double costoCuota, string dias, string horarios)
         {
-            Nombre = nombre;
-            Categoria = categoria;
-            Entrenador = entrenador;
-            Cupo = cupo;
-            CostoCuota = costoCuota;
-            DiasEntrenamiento = dias;
-            Horarios = horarios;
-            inscriptos = new List<Socio>(); //Arrancamos con la lista vacia, sin socios anotados todavia
+            this.Nombre = nombre;
+            this.Categoria = categoria;
+            this.Entrenador = entrenador;
+            this.Cupo = cupo;
+            this.CostoCuota = costoCuota;
+            this.DiasEntrenamiento = dias;
+            this.Horarios = horarios;
+            this.inscriptos = new List<Socio>(); //Arrancamos con la lista vacia, sin socios anotados todavia
         }
 
         //mETODOS
