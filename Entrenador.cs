@@ -29,5 +29,10 @@ namespace TrabajoIntegrador
             Deporte = deporte;
             Categoria = categoria;
         }
+
+        public override string ToString()
+        {
+            return $"Nombre: {Nombre}, DNI: {Dni}, Edad: {Edad}, Categoría: {Categoria}, Deporte: {Deporte}";
+        }
     }
 }

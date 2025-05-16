@@ -43,10 +43,13 @@ namespace TrabajoIntegrador
     {
         public static void Main(string[] args)
         {
-        List<Deporte> deportesMain=new List<Deporte>();
-        List<Entrenador> entrenadorMain=new List<Entrenador>();
+        
+        
         Club club = new Club();
         
+
+            string nombre, dni, categoria, deporte;
+            int edad;
 
 
             int consulta;
@@ -68,8 +71,57 @@ namespace TrabajoIntegrador
 
                 switch (consulta)
                 {
-                    case 1: Console.WriteLine("AGREGAR ENTRENADOR");
+                    case 1: Console.WriteLine("*************************");
+                        Console.WriteLine("AGREGAR ENTRENADOR");
+                        Console.Write("Nombre del entrenador: "); nombre=Console.ReadLine();
+                        Console.Write("DNI del entrenador: "); dni=Console.ReadLine();
+                        Console.Write("Edad del entrenador: "); edad=int.Parse(Console.ReadLine());
+                        Console.Write("Categoria del entrenador: "); categoria=Console.ReadLine();
+                        Console.Write("Deporte del entrenador: "); deporte=Console.ReadLine();
+                        Entrenador entrenadorMain=new Entrenador(nombre, dni,edad, categoria, deporte);
+                        club.AgregarEntrenador(entrenadorMain);
+
                         
+                        break;
+                    case 2:
+                        Console.WriteLine("*************************");
+                       
+
+                        if(club.Entrenadores.Count == 0)
+                        {
+                            Console.WriteLine("NO hay entrenadores cargados");
+                        }
+                        else
+                        {
+                            Console.WriteLine("DNI del entrenador a eliminar: ");
+                            dni = Console.ReadLine();
+
+                            bool eliminado = false;
+
+                            for (int i = 0; i < club.Entrenadores.Count; i++)
+                            {
+                                if (club.Entrenadores[i].Dni == dni)
+                                {
+                                    club.EliminarEntrenador(dni);
+                                    eliminado = true;
+
+                                   
+                                }
+                                if (eliminado)
+                                    Console.WriteLine("ELIMINADO CON EXITO");
+                                else
+                                    Console.WriteLine("NO SE ENCONTRO NINGUN ENTRENADOR CON ESE DNI");
+                            }
+                        }
+                        break;
+
+                           
+                       
+
+
+                        break;
+                    case 3:
+                        club.ImprimirEntrenadores();
                         break;
                 }
 

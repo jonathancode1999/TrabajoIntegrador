@@ -175,5 +175,13 @@ namespace TrabajoIntegrador
             }
             return deudores; //Devolvemos toda la lista de deudores
         }
+        public void ImprimirEntrenadores()
+        {
+            foreach (var entrenador in entrenadores)
+            {
+                Console.WriteLine(entrenador);
+            }
+        }
+
     }
 }
