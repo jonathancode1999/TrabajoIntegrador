@@ -7,6 +7,8 @@ namespace TrabajoIntegrador
         //Atributos de listas con los deportes y entrenadores
         private List<Deporte> deportes;
         private List<Entrenador> entrenadores;
+        private List<Socio> socio;
+        private double descuento;
 
         //Propiedades para poder acceder a la listas
         public List<Deporte> Deportes
@@ -109,16 +111,23 @@ namespace TrabajoIntegrador
         }
 
         //Inscribir un socio en un deporte si es que existe ese deporte y categoria
-        public bool InscribirSocio(Socio s)
+        public string InscribirSocio(Socio s)
         {
             if (!ValidarEdadPorCategoria(s.Edad, s.Categoria)) //Este if sirve para verificar si existe la categoria de su edad
-                return false;
+                return "Edad invalida para la categoria.";
 
             Deporte d = BuscarDeporte(s.Deporte, s.Categoria); //Buscamos el deporte en la categoría
             if (d == null) // Si no existe retornamos falso
-                return false;
+                return "No existe el deporte en esa categoria.";
 
-            return d.Inscribir(s); // Si existe inscribimos al socio a ese deporte y categoria, fijate que estamos usando el metodo inscribir de la clase deporte
+            if (!d.Inscribir(s))
+                return "El socio ya estaba inscripto.";
+
+
+            
+
+
+                return "OK"; // Si existe inscribimos al socio a ese deporte y categoria, fijate que estamos usando el metodo inscribir de la clase deporte
         }
 
         //Dar de baja a un socio por su DNI en un deporte
@@ -133,7 +142,9 @@ namespace TrabajoIntegrador
 
         public bool RegistrarPago(string dni, string deporte, string categoria, int mes)
         {
+            
             Deporte d = BuscarDeporte(deporte, categoria); //Buscamos el deporte
+            
             if (d == null) //Si no existe el deporte, no se hace el pago
             {
                 return false;
@@ -146,7 +157,11 @@ namespace TrabajoIntegrador
                     //Comprobamos si el mes de pago es distinto al ultimo mes pago
                     if (mes > d.Inscriptos[i].UltimoMesPago || (mes == 1 && d.Inscriptos[i].UltimoMesPago == 12))
                     {
+                        
+
                         d.Inscriptos[i].UltimoMesPago = mes; //Actualizamos el último mes de pago
+
+
                         return true;
                     }
 
@@ -156,6 +171,8 @@ namespace TrabajoIntegrador
 
             return false; //Si no se encuentra el socio retornamos false tambien
         }
+
+        
 
 
         //listar los socios que tienen deudas con la cuota
@@ -182,6 +199,64 @@ namespace TrabajoIntegrador
                 Console.WriteLine(entrenador);
             }
         }
+        public void ImprimirInscriptos()
+        {
+            foreach(var inscriptos in socio)
+            {
+                Console.WriteLine(socio);
+            }
+        }
+        public double CalcularCuota(double cuotaBase)
+        {
+            
+            //Calculamos la cuota restando el porcentaje de descuento, si es que tiene
+            return cuotaBase - (cuotaBase * descuento / 100);
+        }
+
+        public void ListadoPorDeporte()
+        {
+           foreach(var deporte in deportes)
+            {
+                Console.WriteLine($"Deporte: {deporte.Nombre} {deporte.Categoria}");
+                var inscriptos=deporte.Inscriptos;
+                if(inscriptos.Count == 0)
+                {
+                    Console.WriteLine(" No hay inscriptos.");
+                }
+                else
+                {
+                    foreach(var socio in inscriptos)
+                    {
+                        Console.WriteLine($" - {socio.Nombre} (DNI: {socio.Dni})");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+        public void ListadoInscriptosPorDeporteYCategoria()
+        {
+            foreach (var deporte in deportes) // Recorremos tal cual están cargados
+            {
+                Console.WriteLine($"Deporte: {deporte.Nombre} | Categoría: {deporte.Categoria}");
+
+                var inscriptos = deporte.ObtenerInscriptos();
+
+                if (inscriptos.Count == 0)
+                {
+                    Console.WriteLine("  No hay inscriptos.");
+                }
+                else
+                {
+                    foreach (var socio in inscriptos)
+                    {
+                        Console.WriteLine($"  - {socio.Nombre} (DNI: {socio.Dni})");
+                    }
+                }
+
+                Console.WriteLine(); // Línea en blanco entre deportes
+            }
+        }
+
 
     }
 }

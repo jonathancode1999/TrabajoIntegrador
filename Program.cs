@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 
 namespace TrabajoIntegrador
@@ -46,10 +47,10 @@ namespace TrabajoIntegrador
         
         
         Club club = new Club();
-        
+        Socio socio;
 
-            string nombre, dni, categoria, deporte;
-            int edad;
+
+            
 
 
             int consulta;
@@ -71,56 +72,29 @@ namespace TrabajoIntegrador
 
                 switch (consulta)
                 {
-                    case 1: Console.WriteLine("*************************");
-                        Console.WriteLine("AGREGAR ENTRENADOR");
-                        Console.Write("Nombre del entrenador: "); nombre=Console.ReadLine();
-                        Console.Write("DNI del entrenador: "); dni=Console.ReadLine();
-                        Console.Write("Edad del entrenador: "); edad=int.Parse(Console.ReadLine());
-                        Console.Write("Categoria del entrenador: "); categoria=Console.ReadLine();
-                        Console.Write("Deporte del entrenador: "); deporte=Console.ReadLine();
-                        Entrenador entrenadorMain=new Entrenador(nombre, dni,edad, categoria, deporte);
-                        club.AgregarEntrenador(entrenadorMain);
-
-                        
+                    case 1:
+                        AltaEntrenador(club);
                         break;
                     case 2:
-                        Console.WriteLine("*************************");
-                       
-
-                        if(club.Entrenadores.Count == 0)
-                        {
-                            Console.WriteLine("NO hay entrenadores cargados");
-                        }
-                        else
-                        {
-                            Console.WriteLine("DNI del entrenador a eliminar: ");
-                            dni = Console.ReadLine();
-
-                            bool eliminado = false;
-
-                            for (int i = 0; i < club.Entrenadores.Count; i++)
-                            {
-                                if (club.Entrenadores[i].Dni == dni)
-                                {
-                                    club.EliminarEntrenador(dni);
-                                    eliminado = true;
-
-                                   
-                                }
-                                if (eliminado)
-                                    Console.WriteLine("ELIMINADO CON EXITO");
-                                else
-                                    Console.WriteLine("NO SE ENCONTRO NINGUN ENTRENADOR CON ESE DNI");
-                            }
-                        }
+                        BajaEntrenador(club);
                         break;
-
+                    case 3:AltaSocio(club);
+                        break;
+                    case 4:
+                        BajaSocio(club);
+                        break;
+                    case 5:
+                        PagoCuota(club);
+                        break;
+                    case 6:
+                        SubMenuInscripciones(club);
+                        break;
                            
                        
 
 
-                        break;
-                    case 3:
+                        
+                    case 7:
                         club.ImprimirEntrenadores();
                         break;
                 }
@@ -136,14 +110,168 @@ namespace TrabajoIntegrador
             }
             while (consulta !=0);
 
+            static void AltaEntrenador(Club club)
+            {
+                string nombre, dni, categoria, deporte;
+                int edad;
+
+
+                Console.WriteLine("");
+                Console.WriteLine("*************************");
+                Console.WriteLine("AGREGAR ENTRENADOR");
+                Console.Write("Nombre del entrenador: "); nombre = Console.ReadLine();
+                Console.Write("DNI del entrenador: "); dni = Console.ReadLine();
+                Console.Write("Edad (Debe ser mayor de 18): "); edad = int.Parse(Console.ReadLine());
+                if(edad<=18)
+                       throw new EdadInvalidaException("El entrenador debe ser mayor de 18.");
+                Console.Write("Deporte del entrenador: "); deporte = Console.ReadLine();
+                Console.WriteLine("Categorias: Infantil(<=12), Cadete (13-15), Juvenil (16-18), Mayor(>18)");
+                Console.Write("Categoria: "); categoria = Console.ReadLine();
+
+                Entrenador entrenadorMain = new Entrenador(nombre, dni, edad, categoria, deporte);
+                
+                if(club.AgregarEntrenador(entrenadorMain))
+                    Console.WriteLine("Entrenador cargado con exito.");
+                else
+                    Console.WriteLine("El entrandor ya existe.");
+
+
+
+            }
+
+            static void BajaEntrenador(Club club)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("*******************************************");
+                Console.Write("DNI del entrenador a Eliminar: ");
+                string dni=Console.ReadLine();
+                if (club.EliminarEntrenador(dni))
+                    Console.WriteLine("Entrenador eliminado.");
+                else
+                    Console.WriteLine("No se encontro el entrenador.");
+
+            }
+
+            static void AltaSocio(Club club)
+            {
+                string nombre, dni, deporte, categoria;
+                int edad, ultimoMesPago;
+                double descuento;
+
+                Console.WriteLine("");
+                Console.WriteLine("**************************************");
+                Console.Write("Nombre Socio: ");
+                nombre = Console.ReadLine();
+                Console.Write("Edad: ");
+                edad=int.Parse(Console.ReadLine());
+                Console.Write("DNI Socio: ");
+                dni =Console.ReadLine();
+                Console.Write("Deporte: ");
+                deporte = Console.ReadLine();
+                Console.Write("Categoria: ");
+                categoria = Console.ReadLine();
+                Console.Write("Ultimo Mes De Pago: ");
+                ultimoMesPago=int.Parse(Console.ReadLine());
+                Console.Write("Descuento de socio: ");
+                descuento=double.Parse(Console.ReadLine());
+
+                Socio socioMain = new Socio(nombre,dni,edad,deporte,categoria,ultimoMesPago,descuento);
+                string resuiltado = club.InscribirSocio(socioMain);
+                if (resuiltado == "OK")
+                    Console.WriteLine("Socio Cargado con exito");
+                else
+                    Console.WriteLine(resuiltado);
+                
+
+            }
+
+            static void BajaSocio(Club club)
+            {
+                string dni,deporte, categoria;
+
+                Console.Write("DNI del socio: ");
+                dni=Console.ReadLine();
+                Console.Write("Deporte socio: ");
+                deporte=Console.ReadLine();
+                Console.Write("Categoria socio: ");
+                categoria=Console.ReadLine();
+
+                if (club.DarDeBajaSocio(dni, deporte, categoria))
+                    Console.WriteLine("Socio Eliminado.");
+                else
+                    Console.WriteLine("No se encotro el socio");
+            }
+
+            static void PagoCuota(Club club)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("*******************************");
+
+                string dni, deporte, categoria;
+                int mes;
+                
+                
+                
+
+                Console.Write("DNI del socio: ");
+                dni = Console.ReadLine();
+                Console.Write("Deporte: ");
+                deporte = Console.ReadLine();
+                Console.WriteLine("Categorias: Infantil(<=12), Cadete (13-15), Juvenil (16-18), Mayor(>18)");
+                Console.Write("Categoria: ");
+                categoria = Console.ReadLine();
+                Console.Write("Mes a pagar: ");
+                mes=int.Parse(Console.ReadLine());
+
+
+                if (club.RegistrarPago(dni, deporte, categoria, mes))
+                    
+                    Console.WriteLine("Pago Realizado.");
+                else
+                    Console.WriteLine("Error en el pago.");
+
+
+            }
+
+            static void SubMenuInscripciones(Club club)
+            {
+                int consulta;
+                do
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("*********************************");
+                    Console.WriteLine("Listados de inscripciones: ");
+                    Console.WriteLine("1- Por deporte");
+                    Console.WriteLine("2- Por deporte y Categoria");
+                    Console.WriteLine("3- Total");
+                    Console.WriteLine("Ingrese Listado: "); consulta=int.Parse(Console.ReadLine());
+
+                    switch(consulta)
+                    {
+                        case 1:
+                            club.ListadoPorDeporte();
+                            break;
+                       case 2:
+                            club.ListadoInscriptosPorDeporteYCategoria();
+
+                            break;
+                       case 3:
+                            club.ImprimirInscriptos();
+                            break;
+ 
+                    }
+
+                }
+                while (true);
+            }
+
+
 
 
         Console.WriteLine("TERMINO EL PROGRAMA"); }
 
-
        
 
-        
         
     }
 

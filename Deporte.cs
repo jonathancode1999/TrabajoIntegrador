@@ -112,5 +112,9 @@ namespace TrabajoIntegrador
             }
             return false; //no lo encontramos asi que retornamos falso
         }
+        public List<Socio> ObtenerInscriptos()
+        {
+            return inscriptos;
+        }
     }
 }
