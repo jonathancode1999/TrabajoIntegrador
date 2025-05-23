@@ -89,13 +89,27 @@ namespace TrabajoIntegrador
                     case 6:
                         SubMenuInscripciones(club);
                         break;
-                           
+                    case 7:
+                        ListDeudores(club);
+                        break;
+                    case 8:
+                        AgregarDeport(club);
+                        break;
+                    case 9:
+                        EliminarDeport(club);
+                        break;  
+
+
+
                        
 
 
                         
-                    case 7:
+                    case 10:
                         club.ImprimirEntrenadores();
+                        break;
+                    case 11:
+                        club.ImprimirDeportes();
                         break;
                 }
 
@@ -265,6 +279,88 @@ namespace TrabajoIntegrador
                 while (true);
             }
 
+            static void ListDeudores(Club club)
+            {
+                int mes;
+                Console.WriteLine("");
+                Console.WriteLine("***************************");
+                Console.Write("Ingrese Mes a consultar: ");
+                mes=int.Parse(Console.ReadLine());
+
+                club.ListarDeudores(mes);
+
+            }
+
+            static void AgregarDeport(Club club)
+            {
+                string nombre, categoria, dias, horarios;
+                int cupo;
+                double costoCuota;
+                List<Entrenador> entrenadores = club.ObtenerEntrenadores();
+                Entrenador entrenadorEncontrado = null;
+
+                Console.WriteLine("");
+                Console.WriteLine("*******************************");
+                Console.Write("Nombre del deporte: ");
+                nombre=Console.ReadLine();
+
+                foreach(Entrenador entrenador in entrenadores)
+                {
+                    if (entrenador.Nombre == nombre)
+                    {
+                       entrenadorEncontrado=entrenador;
+                        break;
+                    }
+                }
+                if(entrenadorEncontrado != null)
+                {
+                    Console.WriteLine($"Entrenador encontrado: {entrenadorEncontrado.Nombre}");
+                }
+
+
+
+
+                Console.Write("Categoria del deporte: ");
+                categoria=Console.ReadLine();
+                Console.Write("Dias que se dictan: ");
+                dias=Console.ReadLine();
+                Console.Write("Horarios que se dictan: ");
+                horarios=Console.ReadLine();
+                Console.Write("Limites de Cupos: ");
+                cupo=int.Parse(Console.ReadLine());
+                Console.Write("Costo de la cuota: ");
+                costoCuota=double.Parse(Console.ReadLine());
+                Console.WriteLine("");
+                Deporte nuevoDeporte=new Deporte(nombre,categoria,entrenadorEncontrado,cupo,costoCuota,dias,horarios);
+                club.AgregarDeporte(nuevoDeporte);
+
+
+
+
+
+
+            }
+
+            static void EliminarDeport(Club club)
+            {
+                string nombre, categoria;
+
+                Console.WriteLine("");
+                Console.WriteLine("***************************");
+                Console.Write("Nombre del deporte a Eliminar: ");
+                nombre=Console.ReadLine();
+                Console.WriteLine("Categorias: Infantil(<=12), Cadete (13-15), Juvenil (16-18), Mayor(>18)");
+                Console.Write("Categoria: ");
+                categoria = Console.ReadLine();
+
+                if (club.EliminarDeporte(nombre, categoria))
+                {
+                    Console.WriteLine("Deporte Eliminado con exito.");
+                }
+                else
+                    Console.WriteLine("No se encontro el deporte.");
+
+            }
 
 
 

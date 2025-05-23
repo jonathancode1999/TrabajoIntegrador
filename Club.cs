@@ -44,6 +44,21 @@ namespace TrabajoIntegrador
             return true;
         }
 
+        public List<Entrenador> ObtenerEntrenadores()
+        {
+            return entrenadores;
+        }
+
+        public Entrenador BuscarEntrenadorPorDeporte(string deporte)
+        {
+            foreach (Entrenador e in entrenadores)
+            {
+                if (e.Deporte.Equals(deporte, StringComparison.OrdinalIgnoreCase))
+                    return e;
+            }
+            return null; // No se encontró un entrenador para ese deporte
+        }
+
         //Eliminar un entrenador por su DNI
         public bool EliminarEntrenador(string dni)
         {
@@ -69,6 +84,13 @@ namespace TrabajoIntegrador
 
             deportes.Add(d); //Si no existe, lo agregamos
             return true;
+        }
+        public void ImprimirDeportes()
+        {
+            foreach (var deporte in deportes)
+            {
+                Console.WriteLine(deporte);
+            }
         }
 
         //Eliminar un deporte, si es que el deporte no tiene socios
