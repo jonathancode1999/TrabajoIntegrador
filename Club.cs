@@ -44,6 +44,14 @@ namespace TrabajoIntegrador
             return true;
         }
 
+        public string Consulta(Deporte d)
+        {
+            //Cod para ver de mas y cosas ambientadas
+            
+
+            
+        }
+
         public List<Entrenador> ObtenerEntrenadores()
         {
             return entrenadores;
