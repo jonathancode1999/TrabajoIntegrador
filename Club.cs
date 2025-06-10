@@ -29,6 +29,8 @@ namespace TrabajoIntegrador
             entrenadores = new List<Entrenador>();
         }
 
+
+        
         //Metodo
         //Agregar un entrenador si no existe
         public bool AgregarEntrenador(Entrenador e)
@@ -55,6 +57,11 @@ namespace TrabajoIntegrador
             }
             return false; //No se encontró el entrenador
         }
+
+
+
+
+
 
         //Agregar un deporte si no existe
         public bool AgregarDeporte(Deporte d)
@@ -89,7 +96,7 @@ namespace TrabajoIntegrador
         {
             for (int i = 0; i < deportes.Count; i++)
             {
-                if (deportes[i].Nombre == nombre && deportes[i].Categoria == categoria)
+                if (deportes[i].Nombre.ToLower() == nombre.ToLower() && deportes[i].Categoria.ToLower() == categoria.ToLower())
                 {
                     return deportes[i]; //Retornamos el deporte que coincide con las propiedades
                 }
@@ -107,6 +114,8 @@ namespace TrabajoIntegrador
             if (categoria == "Mayor") return edad > 18;
             return false; // Si la categoría no es válida para la edad
         }
+
+
 
         //Inscribir un socio en un deporte si es que existe ese deporte y categoria
         public bool InscribirSocio(Socio s)
