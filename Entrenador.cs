@@ -7,6 +7,7 @@ namespace TrabajoIntegrador
         //Atributos
         private string deporte;
         private string categoria;
+        private string DeporteQueDicta;
 
         //Propiedades
         public string Deporte
@@ -20,6 +21,7 @@ namespace TrabajoIntegrador
             get { return categoria; }
             set { categoria = value; }
         }
+       
 
         //Constructor
         //Como esta clase hereda de Persona, usamos sus atributos (nombre, dni y edad)
@@ -28,6 +30,12 @@ namespace TrabajoIntegrador
         {
             Deporte = deporte;
             Categoria = categoria;
+            
+        }
+
+        public override string ToString()
+        {
+            return $"Nombre: {Nombre}, DNI: {Dni}, Edad: {Edad}, Categoría: {Categoria}, Deporte: {Deporte}";
         }
     }
 }
