@@ -4,12 +4,10 @@ namespace TrabajoIntegrador
 {
     public class Persona
     {
-        //Atributos
         private string nombre;
         private string dni;
         private int edad;
 
-        //Propiedades
         public string Nombre
         {
             get { return nombre; }
@@ -28,12 +26,11 @@ namespace TrabajoIntegrador
             set { edad = value; }
         }
 
-        //Constructor
         public Persona(string nombre, string dni, int edad)
         {
-            Nombre = nombre;
-            Dni = dni;
-            Edad = edad;
+            this.nombre = nombre;
+            this.dni = dni;
+            this.edad = edad;
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TrabajoIntegrador
 {
     public class Deporte
     {
-        //Atributos
         private string nombre;
         private string categoria;
         private Entrenador entrenador;
@@ -14,7 +14,6 @@ namespace TrabajoIntegrador
         private string diasEntrenamiento;
         private string horarios;
 
-        //Propiedades
         public string Nombre
         {
             get { return nombre; }
@@ -39,12 +38,6 @@ namespace TrabajoIntegrador
             set { cupo = value; }
         }
 
-        public List<Socio> Inscriptos
-        {
-            get { return inscriptos; }
-            set { inscriptos = value; }
-        }
-
         public double CostoCuota
         {
             get { return costoCuota; }
@@ -63,56 +56,66 @@ namespace TrabajoIntegrador
             set { horarios = value; }
         }
 
-
-        //Constructor
-        public Deporte(string nombre, string categoria,Entrenador entrenador, int cupo,double costoCuota, string dias, string horarios)
+        public List<Socio> Inscriptos
         {
-            this.Nombre = nombre;
-            this.Categoria = categoria;
-            this.Entrenador = entrenador;
-            this.Cupo = cupo;
-            this.CostoCuota = costoCuota;
-            this.DiasEntrenamiento = dias;
-            this.Horarios = horarios;
-            this.inscriptos = new List<Socio>(); //Arrancamos con la lista vacia, sin socios anotados todavia
+            get { return inscriptos; }
         }
 
-        //mETODOS
-        public bool HayCupo()
+        public Deporte(string nombre, string categoria, Entrenador entrenador, int cupo, double costoCuota, string dias, string horarios)
         {
-            //Nos fijamos si la cantidad de inscriptos ya igualo el cupo
-            return inscriptos.Count < cupo;
+            this.nombre = nombre;
+            this.categoria = categoria;
+            this.entrenador = entrenador;
+            this.cupo = cupo;
+            this.costoCuota = costoCuota;
+            this.diasEntrenamiento = dias;
+            this.horarios = horarios;
+            this.inscriptos = new List<Socio>();
         }
 
-
-        //inscribir un socio si es que todavia no esta inscripto
-        public bool Inscribir(Socio s)
-        {
-            for (int i = 0; i < inscriptos.Count; i++)
-                if (inscriptos[i].Dni == s.Dni) //ya existe
-                    return false;
-
-            if (!HayCupo()) //no hay mas lugar
-                return false;
-
-            inscriptos.Add(s); //lo agregamos a la lista
-            return true;
-        }
-
-        //Dar de baja a un socio por su DNI
-        public bool DarDeBaja(string dni)
+        public bool AgregarSocio(Socio s)
         {
             for (int i = 0; i < inscriptos.Count; i++)
             {
-                if (inscriptos[i].Dni == dni) //lo encontramos
+                if (inscriptos[i].Dni == s.Dni)
+                    return false;
+            }
+            if (inscriptos.Count >= cupo)
+                return false;
+
+            inscriptos.Add(s);
+            return true;
+        }
+
+        public bool EliminarSocio(string dni)
+        {
+            for (int i = 0; i < inscriptos.Count; i++)
+            {
+                if (inscriptos[i].Dni == dni)
                 {
-                    inscriptos.RemoveAt(i); //lo borramos de la lista
+                    inscriptos.RemoveAt(i);
                     return true;
                 }
             }
-            return false; //no lo encontramos asi que retornamos falso
+            return false;
         }
-        public List<Socio> ObtenerInscriptos()
+
+        public int CantidadSocios()
+        {
+            return inscriptos.Count;
+        }
+
+        public Socio VerSocio(string dni)
+        {
+            for (int i = 0; i < inscriptos.Count; i++)
+            {
+                if (inscriptos[i].Dni == dni)
+                    return inscriptos[i];
+            }
+            return null;
+        }
+
+        public List<Socio> TodosSocios()
         {
             return inscriptos;
         }
