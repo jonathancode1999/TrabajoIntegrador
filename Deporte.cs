@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 
 namespace TrabajoIntegrador
 {
     public class Deporte
     {
+        //Atributos
         private string nombre;
         private string categoria;
         private Entrenador entrenador;
         private int cupo;
-        private List<Socio> inscriptos;
         private double costoCuota;
         private string diasEntrenamiento;
         private string horarios;
+        private ArrayList inscriptos;
 
+        //Propiedades
         public string Nombre
         {
             get { return nombre; }
@@ -56,11 +58,7 @@ namespace TrabajoIntegrador
             set { horarios = value; }
         }
 
-        public List<Socio> Inscriptos
-        {
-            get { return inscriptos; }
-        }
-
+        //Constructor
         public Deporte(string nombre, string categoria, Entrenador entrenador, int cupo, double costoCuota, string dias, string horarios)
         {
             this.nombre = nombre;
@@ -70,34 +68,18 @@ namespace TrabajoIntegrador
             this.costoCuota = costoCuota;
             this.diasEntrenamiento = dias;
             this.horarios = horarios;
-            this.inscriptos = new List<Socio>();
+            this.inscriptos = new ArrayList();
         }
 
-        public bool AgregarSocio(Socio s)
+        //Metodos para Socios
+        public void AgregarSocio(Socio s)
         {
-            for (int i = 0; i < inscriptos.Count; i++)
-            {
-                if (inscriptos[i].Dni == s.Dni)
-                    return false;
-            }
-            if (inscriptos.Count >= cupo)
-                return false;
-
             inscriptos.Add(s);
-            return true;
         }
 
-        public bool EliminarSocio(string dni)
+        public void EliminarSocio(Socio s)
         {
-            for (int i = 0; i < inscriptos.Count; i++)
-            {
-                if (inscriptos[i].Dni == dni)
-                {
-                    inscriptos.RemoveAt(i);
-                    return true;
-                }
-            }
-            return false;
+            inscriptos.Remove(s);
         }
 
         public int CantidadSocios()
@@ -105,19 +87,19 @@ namespace TrabajoIntegrador
             return inscriptos.Count;
         }
 
-        public Socio VerSocio(string dni)
+        public bool ExisteSocio(Socio s)
         {
-            for (int i = 0; i < inscriptos.Count; i++)
-            {
-                if (inscriptos[i].Dni == dni)
-                    return inscriptos[i];
-            }
-            return null;
+            return inscriptos.Contains(s);
         }
 
-        public List<Socio> TodosSocios()
+        public ArrayList VerSocios()
         {
             return inscriptos;
+        }
+
+        public Socio RetornarSocio(int pos)
+        {
+            return (Socio)inscriptos[pos];
         }
     }
 }

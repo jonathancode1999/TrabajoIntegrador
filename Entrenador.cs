@@ -4,9 +4,11 @@ namespace TrabajoIntegrador
 {
     public class Entrenador : Persona
     {
+        //Atributos
         private string deporte;
         private string categoria;
 
+        //Propiedades
         public string Deporte
         {
             get { return deporte; }
@@ -18,9 +20,9 @@ namespace TrabajoIntegrador
             get { return categoria; }
             set { categoria = value; }
         }
-
-        public Entrenador(string nombre, string dni, int edad, string deporte, string categoria)
-            : base(nombre, dni, edad)
+    
+        //Constructor
+        public Entrenador(string nombre, string dni, int edad, string deporte, string categoria) : base(nombre, dni, edad)
         {
             this.deporte = deporte;
             this.categoria = categoria;

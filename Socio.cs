@@ -4,11 +4,13 @@ namespace TrabajoIntegrador
 {
     public class Socio : Persona
     {
+        //Atributos
         private string deporte;
         private string categoria;
         private int ultimoMesPago;
         private double descuento;
 
+        //Propiedades
         public string Deporte
         {
             get { return deporte; }
@@ -33,8 +35,8 @@ namespace TrabajoIntegrador
             set { descuento = value; }
         }
 
-        public Socio(string nombre, string dni, int edad, string deporte, string categoria, int ultimoMesPago, double descuento)
-            : base(nombre, dni, edad)
+        //Constructor
+        public Socio(string nombre, string dni, int edad, string deporte, string categoria, int ultimoMesPago, double descuento) : base(nombre, dni, edad)
         {
             this.deporte = deporte;
             this.categoria = categoria;
